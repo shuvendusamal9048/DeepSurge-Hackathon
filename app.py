@@ -136,6 +136,7 @@ def show_upload_page():
         st.session_state["user"] = None
         st.session_state["uploaded_df"] = None
 
+
     st.sidebar.header("📂 Upload & Visualization")
     uploaded_file = st.sidebar.file_uploader("Upload CSV File", type=["csv"])
 
@@ -158,11 +159,27 @@ def show_upload_page():
         st.write("### Preview of Dataset")
         st.dataframe(df.head())
 
-        st.markdown("### ⚙ Data Preprocessing")
-        st.write("*Null Values per Column:*")
+        st.markdown("### ⚙️ Data Preprocessing")
+
+        # Null values per column
+        st.write("**Null Values per Column:**")
         st.write(df.isnull().sum())
-        st.write("*Basic Statistics:*")
-        st.write(df.describe(include='all'))
+
+        # Data types
+        st.write("**Column Data Types:**")
+        st.write(df.dtypes)
+
+        # Number of unique values per column
+        st.write("**Unique Values per Column:**")
+        st.write(df.nunique())
+
+        # Minimum and maximum values (for numeric columns)
+        st.write("**Min and Max Values (Numeric Columns):**")
+        st.write(df.select_dtypes(include=['int64', 'float64']).agg(['min', 'max']).transpose())
+
+        # Non-null counts
+        st.write("**Non-Null Counts:**")
+        st.write(df.count())
 
         df_filled = df.fillna("Missing")
 
