@@ -1,5 +1,5 @@
 import pandas as pd
-from database import FileMeta, session
+from db import FileMeta, session
 
 def get_stats(df):
     stats = {

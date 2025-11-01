@@ -1,4 +1,4 @@
-from database import session, FileMeta, User
+from db import session, FileMeta, User
 
 # Check all users
 users = session.query(User).all()

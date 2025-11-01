@@ -1,6 +1,6 @@
 import streamlit as st
 import streamlit_authenticator as stauth
-from database import session, User
+from db import session, User
 import bcrypt
 
 def register_user(username, password):
