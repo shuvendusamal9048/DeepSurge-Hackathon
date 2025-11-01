@@ -89,25 +89,44 @@ def show_login_page():
         st.session_state["show_register"] = True
 # ------------------ Register Page ------------------
 def show_register_page():
-    # Centered Register Title
-
-
-    st.markdown("#### 🧾 Create a new  account")
+    st.markdown("<h1 style='text-align: center; color: #4CAF50;'>Register</h1>", unsafe_allow_html=True)
 
     with st.form("register_form"):
+        st.markdown(
+            """
+            <style>
+            .stForm {
+                max-width: 400px;
+                margin: 0 auto;
+                padding: 30px;
+                border: 2px solid #4CAF50;
+                border-radius: 10px;
+                background-color: #FFF3E0;
+            }
+            .stTextInput>div>div>input {
+                width: 100% !important;
+            }
+            div.stButton > button {
+                display: block;
+                margin: 10px auto;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+
         new_user = st.text_input("New Username", key="reg_user")
         new_pass = st.text_input("New Password", type="password", key="reg_pass")
         submitted = st.form_submit_button("Register")
         if submitted:
             if new_user and new_pass:
                 create_admin(new_user, new_pass)
-                st.success("✅ Registered Success! Go back to login.")
+                st.success("✅ Registered Successfully! Go back to login.")
             else:
                 st.warning("Please fill all fields")
 
     if st.button("Back to Login"):
         st.session_state["show_register"] = False
-
 # ------------------ CSV Upload & Dashboard ------------------
 def show_upload_page():
     st.markdown(f"## 👋 Welcome, {st.session_state['user']}!")
@@ -139,10 +158,10 @@ def show_upload_page():
         st.write("### Preview of Dataset")
         st.dataframe(df.head())
 
-        st.markdown("### ⚙️ Data Preprocessing")
-        st.write("**Null Values per Column:**")
+        st.markdown("### ⚙ Data Preprocessing")
+        st.write("*Null Values per Column:*")
         st.write(df.isnull().sum())
-        st.write("**Basic Statistics:**")
+        st.write("*Basic Statistics:*")
         st.write(df.describe(include='all'))
 
         df_filled = df.fillna("Missing")
@@ -186,7 +205,7 @@ def show_upload_page():
             st.plotly_chart(fig, use_container_width=True)
 
         # ------------------ File Upload History ------------------
-        st.markdown("### 🗂️ Your Uploaded File History")
+        st.markdown("### 🗂 Your Uploaded File History")
         user_files = get_user_files(st.session_state["user"])
         if user_files is not None and not user_files.empty:
             st.dataframe(user_files)
